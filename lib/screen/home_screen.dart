@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:elice_flutter/screen/all_courses_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -89,30 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 8,
-                  ),
-                  child: Text(
-                    "추천 과목",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(right: 8),
-                  child: Text(
-                    "전체 보기",
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.grey),
-                  ),
-                ),
-              ],
-            ),
+            sectionBar("추천 과목", 0),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -120,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Divider(),
-            sectionBar("무료 과목"),
+            sectionBar("무료 과목", 1),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -150,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget sectionBar(String sectionTitle) {
+  Widget sectionBar(String sectionTitle, int courseType) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -163,14 +141,26 @@ class _HomeScreenState extends State<HomeScreen> {
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.only(right: 8),
-          child: Text(
-            "전체 보기",
-            style: TextStyle(
-                fontSize: 14, fontWeight: FontWeight.w700, color: Colors.grey),
-          ),
-        ),
+        Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: GestureDetector(
+              onTap: () {
+                // navigate with course type
+                print("clicked!");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AllCoursesScreen(courseType)),
+                );
+              },
+              child: const Text(
+                "전체 보기",
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.grey),
+              ),
+            )),
       ],
     );
   }
